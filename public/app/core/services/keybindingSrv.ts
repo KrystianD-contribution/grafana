@@ -16,6 +16,7 @@ import {
   ShowModalEvent,
   ShowModalReactEvent,
   ZoomOutEvent,
+  ZoomInEvent,
 } from '../../types/events';
 import { contextSrv } from '../core';
 import { getDatasourceSrv } from '../../features/plugins/datasource_srv';
@@ -202,8 +203,16 @@ export class KeybindingSrv {
       appEvents.publish(new ZoomOutEvent(2));
     });
 
+    this.bind('t a', () => {
+      appEvents.publish(new ZoomInEvent(2));
+    });
+
     this.bind('ctrl+z', () => {
       appEvents.publish(new ZoomOutEvent(2));
+    });
+
+    this.bind('ctrl+a', () => {
+      appEvents.publish(new ZoomInEvent(2));
     });
 
     this.bind('t left', () => {

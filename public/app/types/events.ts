@@ -152,6 +152,10 @@ export class ZoomOutEvent extends BusEventWithPayload<number> {
   static type = 'zoom-out';
 }
 
+export class ZoomInEvent extends BusEventWithPayload<number> {
+  static type = 'zoom-in';
+}
+
 export enum ShiftTimeEventPayload {
   Left = -1,
   Right = 1,

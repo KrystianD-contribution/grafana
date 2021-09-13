@@ -14,7 +14,7 @@ import { getShiftedTimeRange, getZoomedTimeRange } from 'app/core/utils/timePick
 import { config } from 'app/core/config';
 import { getRefreshFromUrl } from '../utils/getRefreshFromUrl';
 import { locationService } from '@grafana/runtime';
-import { ShiftTimeEvent, ShiftTimeEventPayload, ZoomOutEvent } from '../../../types/events';
+import { ShiftTimeEvent, ShiftTimeEventPayload, ZoomInEvent, ZoomOutEvent } from '../../../types/events';
 import { contextSrv, ContextSrv } from 'app/core/services/context_srv';
 import appEvents from 'app/core/app_events';
 
@@ -35,6 +35,10 @@ export class TimeSrv {
 
     appEvents.subscribe(ZoomOutEvent, (e) => {
       this.zoomOut(e.payload);
+    });
+
+    appEvents.subscribe(ZoomInEvent, (e) => {
+      this.zoomIn(e.payload);
     });
 
     appEvents.subscribe(ShiftTimeEvent, (e) => {
@@ -329,6 +333,13 @@ export class TimeSrv {
   zoomOut(factor: number) {
     const range = this.timeRange();
     const { from, to } = getZoomedTimeRange(range, factor);
+
+    this.setTime({ from: toUtc(from), to: toUtc(to) });
+  }
+
+  zoomIn(factor: number) {
+    const range = this.timeRange();
+    const { from, to } = getZoomedTimeRange(range, 1.0 / factor);
 
     this.setTime({ from: toUtc(from), to: toUtc(to) });
   }

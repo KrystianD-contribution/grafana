@@ -32,6 +32,7 @@ const shortcuts = {
   ],
   'Time Range': [
     { keys: ['t', 'z'], description: 'Zoom out time range' },
+    { keys: ['t', 'a'], description: 'Zoom in time range' },
     {
       keys: ['t', '←'],
       description: 'Move time range back',

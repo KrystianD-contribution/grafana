@@ -51,9 +51,20 @@ export class ExploreTimeControls extends Component<Props> {
     });
   };
 
-  onZoom = () => {
+  onZoomOut = () => {
     const { range, onChangeTime, timeZone } = this.props;
     const { from, to } = getZoomedTimeRange(range, 2);
+    const nextTimeRange = {
+      from: dateTimeForTimeZone(timeZone, from),
+      to: dateTimeForTimeZone(timeZone, to),
+    };
+
+    onChangeTime(nextTimeRange);
+  };
+
+  onZoomIn = () => {
+    const { range, onChangeTime, timeZone } = this.props;
+    const { from, to } = getZoomedTimeRange(range, 1.0 / 2);
     const nextTimeRange = {
       from: dateTimeForTimeZone(timeZone, from),
       to: dateTimeForTimeZone(timeZone, to),
@@ -70,7 +81,8 @@ export class ExploreTimeControls extends Component<Props> {
       timeZone,
       onMoveBackward: this.onMoveBack,
       onMoveForward: this.onMoveForward,
-      onZoom: this.onZoom,
+      onZoomOut: this.onZoomOut,
+      onZoomIn: this.onZoomIn,
       hideText,
     };
 

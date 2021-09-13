@@ -12,7 +12,13 @@ import { TimePickerWithHistory } from 'app/core/components/TimePicker/TimePicker
 // Utils & Services
 import { getTimeSrv } from 'app/features/dashboard/services/TimeSrv';
 import { appEvents } from 'app/core/core';
-import { ShiftTimeEvent, ShiftTimeEventPayload, TimeRangeUpdatedEvent, ZoomOutEvent } from '../../../../types/events';
+import {
+  ShiftTimeEvent,
+  ShiftTimeEventPayload,
+  TimeRangeUpdatedEvent,
+  ZoomOutEvent,
+  ZoomInEvent,
+} from '../../../../types/events';
 import { Unsubscribable } from 'rxjs';
 
 export interface Props {
@@ -70,8 +76,12 @@ export class DashNavTimeControls extends Component<Props> {
     this.onRefresh();
   };
 
-  onZoom = () => {
+  onZoomOut = () => {
     appEvents.publish(new ZoomOutEvent(2));
+  };
+
+  onZoomIn = () => {
+    appEvents.publish(new ZoomInEvent(2));
   };
 
   render() {
@@ -91,7 +101,8 @@ export class DashNavTimeControls extends Component<Props> {
           timeZone={timeZone}
           onMoveBackward={this.onMoveBack}
           onMoveForward={this.onMoveForward}
-          onZoom={this.onZoom}
+          onZoomOut={this.onZoomOut}
+          onZoomIn={this.onZoomIn}
           onChangeTimeZone={this.onChangeTimeZone}
         />
         <RefreshPicker

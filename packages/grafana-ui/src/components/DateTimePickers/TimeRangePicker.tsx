@@ -38,7 +38,8 @@ export interface TimeRangePickerProps extends Themeable {
   onChangeTimeZone: (timeZone: TimeZone) => void;
   onMoveBackward: () => void;
   onMoveForward: () => void;
-  onZoom: () => void;
+  onZoomOut: () => void;
+  onZoomIn: () => void;
   history?: TimeRange[];
   hideQuickRanges?: boolean;
 }
@@ -73,7 +74,8 @@ export class UnthemedTimeRangePicker extends PureComponent<TimeRangePickerProps,
       value,
       onMoveBackward,
       onMoveForward,
-      onZoom,
+      onZoomOut,
+      onZoomIn,
       timeZone,
       timeSyncButton,
       isSynced,
@@ -142,7 +144,10 @@ export class UnthemedTimeRangePicker extends PureComponent<TimeRangePickerProps,
         )}
 
         <Tooltip content={ZoomOutTooltip} placement="bottom">
-          <ToolbarButton aria-label="Zoom out time range" onClick={onZoom} icon="search-minus" variant={variant} />
+          <ToolbarButton aria-label="Zoom out time range" onClick={onZoomOut} icon="search-minus" variant={variant} />
+        </Tooltip>
+        <Tooltip content={ZoomInTooltip} placement="bottom">
+          <ToolbarButton aria-label="Zoom in time range" onClick={onZoomIn} icon="search-plus" variant={variant} />
         </Tooltip>
       </ButtonGroup>
     );
@@ -152,6 +157,12 @@ export class UnthemedTimeRangePicker extends PureComponent<TimeRangePickerProps,
 const ZoomOutTooltip = () => (
   <>
     Time range zoom out <br /> CTRL+Z
+  </>
+);
+
+const ZoomInTooltip = () => (
+  <>
+    Time range zoom in <br /> CTRL+A
   </>
 );
 
